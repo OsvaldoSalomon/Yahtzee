@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import Dice from '../Dice/Dice'
-import ScoreTable from '../Score/ScoreTable'
-import './Game.css'
+import React, { Component } from 'react';
+import Dice from '../Dice/Dice';
+import ScoreTable from '../Score/ScoreTable';
+import './Game.css';
 
-const NUM_DICE = 5
-const NUM_ROLLS = 3
+const NUM_DICE = 5;
+const NUM_ROLLS = 3;
 
 class Game extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             dice: Array.from({ length: NUM_DICE }),
             locked: Array(NUM_DICE).fill(false),
@@ -28,10 +28,10 @@ class Game extends Component {
                 yahtzee: undefined,
                 chance: undefined,
             },
-        }
-        this.roll = this.roll.bind(this)
-        this.doScore = this.doScore.bind(this)
-        this.toggleLocked = this.toggleLocked.bind(this)
+        };
+        this.roll = this.roll.bind(this);
+        this.doScore = this.doScore.bind(this);
+        this.toggleLocked = this.toggleLocked.bind(this);
     }
 
     roll(evt) {
@@ -42,19 +42,20 @@ class Game extends Component {
             ),
             locked: st.rollsLeft > 1 ? st.locked : Array(NUM_DICE).fill(true),
             rollsLeft: st.rollsLeft - 1,
-        }))
+        }));
     }
 
     toggleLocked(idx) {
-        console.log(idx)
+        if (this.state.rollsLeft > 0) {
+            this.setState((state) => ({
+                locked: [
+                    ...state.locked.slice(0, idx),
+                    !state.locked[idx],
+                    ...state.locked.slice(idx + 1),
+                ],
+            }));
+        }
         // toggle whether idx is in locked or not
-        this.setState((state) => ({
-            locked: [
-                ...state.locked.slice(0, idx),
-                !state.locked[idx],
-                ...state.locked.slice(idx + 1),
-            ],
-        }))
     }
 
     doScore(ruleName, ruleFn) {
@@ -63,8 +64,8 @@ class Game extends Component {
             scores: { ...st.scores, [ruleName]: ruleFn(this.state.dice) },
             rollsLeft: NUM_ROLLS,
             locked: Array(NUM_DICE).fill(false),
-        }))
-        this.roll()
+        }));
+        this.roll();
     }
 
     render() {
@@ -91,8 +92,8 @@ class Game extends Component {
                 </header>
                 <ScoreTable doScore={this.doScore} scores={this.state.scores} />
             </div>
-        )
+        );
     }
 }
 
-export default Game
+export default Game;
