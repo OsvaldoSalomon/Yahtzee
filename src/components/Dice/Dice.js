@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import Die from './Die'
-import './Dice.css'
+import React, { Component } from 'react';
+import Die from './Die';
+import './Dice.css';
 
 class Dice extends Component {
     render() {
@@ -13,11 +13,13 @@ class Dice extends Component {
                         locked={this.props.locked[idx]}
                         idx={idx}
                         key={idx}
+                        disabled={this.props.disabled}
+                        rolling={this.props.rolling && !this.props.locked[idx]}
                     />
                 ))}
             </div>
-        )
+        );
     }
 }
 
-export default Dice
+export default Dice;
