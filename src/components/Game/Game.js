@@ -92,17 +92,19 @@ class Game extends Component {
     }
 
     render() {
+        const { dice, locked, rollsLeft, rolling, scores } = this.state;
+
         return (
             <div className="Game">
                 <header className="Game-header">
                     <h1 className="App-title">Yahtzee!</h1>
                     <section className="Game-dice-section">
                         <Dice
-                            dice={this.state.dice}
-                            locked={this.state.locked}
+                            dice={dice}
+                            locked={locked}
                             handleClick={this.toggleLocked}
-                            disabled={this.state.rollsLeft === 0}
-                            rolling={this.state.rolling}
+                            disabled={rollsLeft === 0}
+                            rolling={rolling}
                         />
                         <div className="Game-button-wrapper">
                             <button
@@ -119,7 +121,7 @@ class Game extends Component {
                         </div>
                     </section>
                 </header>
-                <ScoreTable doScore={this.doScore} scores={this.state.scores} />
+                <ScoreTable doScore={this.doScore} scores={scores} />
             </div>
         );
     }
